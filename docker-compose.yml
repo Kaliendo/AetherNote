@@ -1,0 +1,17 @@
+services:
+  app:
+    container_name: aethernote
+    build: .
+    ports:
+      - "${LISTEN_PORT}:${LISTEN_PORT}"
+    depends_on:
+      - redis
+    environment:
+      REDIS_HOST: ${REDIS_HOST}
+      PORT: ${LISTEN_PORT}
+
+  redis:
+    container_name: redis
+    image: "redis:alpine"
+    ports:
+      - "${REDIS_PORT}:6379"
