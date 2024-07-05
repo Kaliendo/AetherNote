@@ -44,3 +44,11 @@ func RequestBodyTooLarge() APIError {
 func InvalidContentType() APIError {
 	return NewAPIError(http.StatusBadRequest, fmt.Errorf("Content-Type header is not application/json"))
 }
+
+func InvalidNoteId() APIError {
+	return NewAPIError(http.StatusBadRequest, fmt.Errorf("Invalid Note ID"))
+}
+
+func NoteDoesNotExist() APIError {
+	return NewAPIError(http.StatusNotFound, fmt.Errorf("The note doesn't exist"))
+}

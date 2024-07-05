@@ -26,6 +26,7 @@ func main() {
 	listenAddr := fmt.Sprintf(":%s", os.Getenv("LISTEN_PORT"))
 
 	router.Post("/note/new", handler.Make(noteHandler.HandleNewNote))
+	router.Get("/note/{id}", handler.Make(noteHandler.HandleExistingNote))
 
 	slog.Info("API server running", "port", listenAddr)
 	http.ListenAndServe(listenAddr, router)

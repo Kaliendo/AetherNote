@@ -5,6 +5,7 @@ import (
 	"AetherNote/types"
 	"encoding/json"
 	"errors"
+	"github.com/go-chi/chi/v5"
 	"io"
 	"net/http"
 	"os"
@@ -89,4 +90,19 @@ func (h NoteHandler) HandleNewNote(w http.ResponseWriter, r *http.Request) error
 	}
 
 	return writeJSON(w, http.StatusCreated, n)
+}
+
+func (h NoteHandler) HandleExistingNote(w http.ResponseWriter, r *http.Request) error {
+	noteId := chi.URLParam(r, "id")
+	if noteId == "" {
+		return InvalidNoteId()
+	}
+	note, err := h.db.FetchNote(noteId)
+	if err != nil {
+		if err.Error() == "key does not exist" {
+			return NoteDoesNotExist()
+		}
+		return err
+	}
+	return writeJSON(w, http.StatusCreated, note.ToResponseNote())
 }
