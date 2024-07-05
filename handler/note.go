@@ -72,16 +72,7 @@ func (h NoteHandler) HandleNewNote(w http.ResponseWriter, r *http.Request) error
 		}
 	}
 
-	errorMap := make(map[string]string)
-	if n.Data == "" {
-		errorMap["data"] = "Missing or invalid field"
-	}
-	if n.Views <= 0 {
-		errorMap["views"] = "Missing or invalid field"
-	}
-	if n.Expiration < 0 {
-		errorMap["expiration"] = "Invalid field"
-	}
+	errorMap := n.Validate()
 
 	if len(errorMap) > 0 {
 		return InvalidRequestData(errorMap)
