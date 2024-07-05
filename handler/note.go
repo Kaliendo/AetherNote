@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"AetherNote/config"
 	"AetherNote/db"
 	"AetherNote/types"
 	"encoding/json"
@@ -8,8 +9,6 @@ import (
 	"github.com/go-chi/chi/v5"
 	"io"
 	"net/http"
-	"os"
-	"strconv"
 	"strings"
 )
 
@@ -26,18 +25,13 @@ func (h NoteHandler) HandleNewNote(w http.ResponseWriter, r *http.Request) error
 		return InvalidContentType()
 	}
 
-	uploadLimit, err := strconv.Atoi(os.Getenv("UPLOAD_LIMIT"))
-	if err != nil {
-		return err
-	}
-
-	r.Body = http.MaxBytesReader(w, r.Body, int64(uploadLimit))
+	r.Body = http.MaxBytesReader(w, r.Body, config.GetUploadLimit())
 
 	dec := json.NewDecoder(r.Body)
 	dec.DisallowUnknownFields()
 
 	var n types.Note
-	err = dec.Decode(&n)
+	err := dec.Decode(&n)
 	if err != nil {
 		var syntaxError *json.SyntaxError
 		var unmarshalTypeError *json.UnmarshalTypeError
