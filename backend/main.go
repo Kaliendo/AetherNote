@@ -23,7 +23,7 @@ func main() {
 
 	router := chi.NewMux()
 	router.Use(middleware.Recoverer)
-	listenAddr := fmt.Sprintf(":%s", os.Getenv("LISTEN_PORT"))
+	listenAddr := fmt.Sprintf(":%s", os.Getenv("BACKEND_LISTENING_PORT"))
 
 	router.Post("/note/new", handler.Make(noteHandler.HandleNewNote))
 	router.Get("/note/{id}", handler.Make(noteHandler.HandleExistingNote))

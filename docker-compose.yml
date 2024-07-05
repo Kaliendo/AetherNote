@@ -1,11 +1,13 @@
 services:
-  app:
-    container_name: aethernote
-    build: .
+  backend:
+    container_name: aethernote-be
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
     depends_on:
       - redis
     ports:
-      - "127.0.0.1:${LISTEN_PORT}:${LISTEN_PORT}"
+      - "127.0.0.1:${BACKEND_LISTENING_PORT}:${BACKEND_LISTENING_PORT}"
     networks:
       - internal
 
