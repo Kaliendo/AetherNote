@@ -6,9 +6,6 @@ services:
       - redis
     ports:
       - "127.0.0.1:${LISTEN_PORT}:${LISTEN_PORT}"
-    environment:
-      REDIS_HOST: ${REDIS_HOST}
-      PORT: ${LISTEN_PORT}
     networks:
       - internal
 
