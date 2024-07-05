@@ -2,16 +2,22 @@ services:
   app:
     container_name: aethernote
     build: .
-    ports:
-      - "${LISTEN_PORT}:${LISTEN_PORT}"
     depends_on:
       - redis
+    ports:
+      - "127.0.0.1:8000:${LISTEN_PORT}"
     environment:
       REDIS_HOST: ${REDIS_HOST}
       PORT: ${LISTEN_PORT}
+    networks:
+      - internal
 
   redis:
     container_name: redis
     image: "redis:alpine"
-    ports:
-      - "${REDIS_PORT}:6379"
+    networks:
+      - internal
+
+networks:
+  internal:
+    driver: bridge
