@@ -11,6 +11,16 @@ services:
     networks:
       - internal
 
+  frontend:
+    container_name: aethernote-frontend
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    ports:
+      - "127.0.0.1:${FRONTEND_LISTENING_PORT}:${FRONTEND_LISTENING_PORT}"
+    networks:
+      - internal
+
   redis:
     container_name: redis
     image: "redis:alpine"
