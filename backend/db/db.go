@@ -39,6 +39,11 @@ func (d DB) SaveNote(n types.Note) error {
 		return fmt.Errorf("Error storing data in Redis: %v", err)
 	}
 
+	configExpirationTime := config.GetMaxExpirationTime()
+	if configExpirationTime == -1 {
+		return nil
+	}
+
 	var ttl time.Duration
 	if n.Expiration > 0 {
 		ttl = time.Duration(n.Expiration) * time.Second

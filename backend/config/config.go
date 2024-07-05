@@ -12,6 +12,7 @@ import (
 var (
 	uploadLimit       int64
 	maxExpirationTime int
+	maxViews          int
 	once              sync.Once
 )
 
@@ -27,6 +28,12 @@ func init() {
 		}
 		maxExpirationTime = maxExpirationTimeStr
 
+		maxViewsStr, err := strconv.Atoi(os.Getenv("MAX_VIEWS"))
+		if err != nil {
+			log.Fatalln(err)
+		}
+		maxViews = maxViewsStr
+
 		uploadLimitStr, err := strconv.Atoi(os.Getenv("UPLOAD_LIMIT"))
 		if err != nil {
 			log.Fatalln(err)
@@ -41,4 +48,8 @@ func GetUploadLimit() int64 {
 
 func GetMaxExpirationTime() int {
 	return maxExpirationTime
+}
+
+func GetMaxViews() int {
+	return maxViews
 }
