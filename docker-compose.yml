@@ -17,7 +17,7 @@ services:
       context: .
       dockerfile: Dockerfile.frontend
     ports:
-      - "127.0.0.1:${FRONTEND_LISTENING_PORT}:${FRONTEND_LISTENING_PORT}"
+      - "127.0.0.1:${FRONTEND_LISTENING_PORT}:3000"
     networks:
       - internal
 
