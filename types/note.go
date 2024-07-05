@@ -1,6 +1,7 @@
 package types
 
 import (
+	"AetherNote/config"
 	"fmt"
 	"os"
 )
@@ -27,7 +28,10 @@ func (n *Note) Validate() map[string]string {
 		errorMap["views"] = "Missing or invalid field"
 	}
 	if n.Expiration < 0 {
-		errorMap["expiration"] = "Invalid field"
+		errorMap["expiration"] = "The expiration time must be at least 0"
+	}
+	if n.Expiration > config.GetMaxExpirationTime() {
+		errorMap["expiration"] = "The expiration time can't exceed the limit"
 	}
 	return errorMap
 }
