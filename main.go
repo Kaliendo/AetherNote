@@ -1,7 +1,8 @@
 package main
 
 import (
-	"AetherNote/routes"
+	"AetherNote/db"
+	"AetherNote/handler"
 	"fmt"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
@@ -16,11 +17,15 @@ func main() {
 	if err := godotenv.Load(); err != nil {
 		log.Fatal(err)
 	}
+
+	client := db.CreateConnection()
+	noteHandler := handler.NewNoteHandler(client)
+
 	router := chi.NewMux()
 	router.Use(middleware.Recoverer)
 	listenAddr := fmt.Sprintf(":%s", os.Getenv("LISTEN_PORT"))
 
-	router.Mount("/note", routes.NoteRoutes())
+	router.Post("/note/new", handler.Make(noteHandler.HandleNewNote))
 
 	slog.Info("API server running", "port", listenAddr)
 	http.ListenAndServe(listenAddr, router)

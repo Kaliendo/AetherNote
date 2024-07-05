@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"AetherNote/db"
 	"AetherNote/types"
 	"encoding/json"
 	"errors"
@@ -11,7 +12,15 @@ import (
 	"strings"
 )
 
-func HandleNewNote(w http.ResponseWriter, r *http.Request) error {
+type NoteHandler struct {
+	db db.DB
+}
+
+func NewNoteHandler(db db.DB) *NoteHandler {
+	return &NoteHandler{db: db}
+}
+
+func (h NoteHandler) HandleNewNote(w http.ResponseWriter, r *http.Request) error {
 	if !strings.Contains(r.Header.Get("Content-Type"), "application/json") {
 		return InvalidContentType()
 	}
@@ -79,6 +88,11 @@ func HandleNewNote(w http.ResponseWriter, r *http.Request) error {
 	}
 
 	n.ID, err = generateRandomString(32)
+	if err != nil {
+		return err
+	}
+
+	err = h.db.SaveNote(n)
 	if err != nil {
 		return err
 	}
