@@ -1,6 +1,7 @@
 package db
 
 import (
+	"AetherNote/config"
 	"AetherNote/types"
 	"context"
 	"fmt"
@@ -38,11 +39,14 @@ func (d DB) SaveNote(n types.Note) error {
 		return fmt.Errorf("Error storing data in Redis: %v", err)
 	}
 
+	var ttl time.Duration
 	if n.Expiration > 0 {
-		ttl := time.Duration(n.Expiration) * time.Second
-		if err = d.Expire(ctx, hashKey, ttl).Err(); err != nil {
-			return err
-		}
+		ttl = time.Duration(n.Expiration) * time.Second
+	} else {
+		ttl = time.Duration(config.GetMaxExpirationTime()) * time.Second
+	}
+	if err = d.Expire(ctx, hashKey, ttl).Err(); err != nil {
+		return err
 	}
 	return nil
 }
