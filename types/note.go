@@ -1,10 +1,20 @@
 package types
 
+import (
+	"fmt"
+	"os"
+)
+
 type Note struct {
-	ID             string `json:"id"`
+	ID             string
 	Data           string `json:"data"`
 	Views          int    `json:"views"`
 	Expiration     int    `json:"expiration"`
+	CustomPassword bool   `json:"customPassword"`
+}
+
+type NoteResponse struct {
+	Data           string `json:"data"`
 	CustomPassword bool   `json:"customPassword"`
 }
 
@@ -20,4 +30,23 @@ func (n *Note) Validate() map[string]string {
 		errorMap["expiration"] = "Invalid field"
 	}
 	return errorMap
+}
+
+func (n *Note) CreateHashKey() string {
+	return fmt.Sprintf("%s:%s", os.Getenv("REDIS_PREFIX"), n.ID)
+}
+
+func (n *Note) CreateHashMap() map[string]any {
+	return map[string]any{
+		"data":           n.Data,
+		"views":          n.Views,
+		"customPassword": n.CustomPassword,
+	}
+}
+
+func (n *Note) ToResponseNote() *NoteResponse {
+	return &NoteResponse{
+		n.Data,
+		n.CustomPassword,
+	}
 }
