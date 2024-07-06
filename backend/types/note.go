@@ -38,7 +38,7 @@ func (n *Note) Validate() map[string]string {
 		errorMap["expiration"] = "The expiration time must be at least 0"
 	}
 	maxExpirationtime := config.GetMaxExpirationTime()
-	if maxExpirationtime != -1 && n.Expiration > maxExpirationtime {
+	if maxExpirationtime != 0 && n.Expiration > maxExpirationtime {
 		errorMap["expiration"] = "The expiration time can't exceed the limit"
 	}
 	return errorMap

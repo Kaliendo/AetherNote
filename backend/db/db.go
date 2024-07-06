@@ -40,7 +40,7 @@ func (d DB) SaveNote(n types.Note) error {
 	}
 
 	configExpirationTime := config.GetMaxExpirationTime()
-	if configExpirationTime == -1 {
+	if configExpirationTime == 0 {
 		return nil
 	}
 
