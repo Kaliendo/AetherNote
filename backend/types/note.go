@@ -28,7 +28,7 @@ func (n *Note) Validate() map[string]string {
 		errorMap["views"] = "Missing or invalid field"
 	}
 	if n.Views > config.GetMaxViews() {
-		errorMap["views"] = "The views value can't exceed te limit"
+		errorMap["views"] = "The views value can't exceed the limit"
 	}
 	if n.Expiration <= 0 {
 		errorMap["expiration"] = "The expiration time must be at least 0"
