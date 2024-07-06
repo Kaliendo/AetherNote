@@ -1,19 +1,23 @@
 import React, { useState } from 'react';
-import { generateAESKey, encryptData } from '../utils/cryptoUtils';
+import { generateAESKey, aesEncrypt, deriveKeyFromPassword } from '../utils/cryptoUtils';
+import { createNote } from '../api/api';
+import { prettifyError } from '../utils/helper';
 import { ReactComponent as LogoSVG } from '../logo.svg';
 import ErrorModal from '../components/ui/errorModal';
 import TextArea from '../components/ui/textArea';
 import OptionsSection from '../components/ui/options';
-import ResultComponent from '../components/result';
+import ResultComponent from '../components/ui/result';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLock } from '@fortawesome/free-solid-svg-icons';
+
+const Host = process.env.REACT_APP_HOST || 'http://localhost:3000';
 
 function Index() {
     const [text, setText] = useState('');
     const [key, setKey] = useState('');
     const [encryptedData, setEncryptedData] = useState('');
     const [error, setError] = useState(false);
-    const [errorMessage, setErrorMessage] = useState('');
+    const [errorMessages, setErrorMessages] = useState([]);
     const [options, setOptions] = useState({
         customExpiration: false,
         customViewsLimit: false,
@@ -25,10 +29,11 @@ function Index() {
         customPassword: ''
     });
     const [isEncrypted, setIsEncrypted] = useState(false);
+    const [noteLink, setNoteLink] = useState('');
 
-    const raiseError = (message) => {
+    const raiseError = (messages) => {
         setError(true);
-        setErrorMessage(message);
+        setErrorMessages(messages);
     };
 
     const handleSecure = async () => {
@@ -47,19 +52,32 @@ function Index() {
             return;
         }
 
-        const newKey = await generateAESKey();
-        setKey(newKey);
+        const encKey = options.customPassword ? await deriveKeyFromPassword(inputs.customPassword) : await generateAESKey();
+        setKey(encKey);
 
-        const data = await encryptData(text, newKey);
+        const data = await aesEncrypt(text, encKey);
         if (!data) {
             raiseError("Encryption failed!");
             return;
         }
 
         console.log(data);
-        console.log(newKey);
+        console.log(encKey);
         setEncryptedData(data);
-        setIsEncrypted(true);
+
+        const payload = {
+            data: data,
+            views: options.customViewsLimit ? parseInt(inputs.viewsLimit, 10) : 1,
+            expiration: options.customExpiration ? parseInt(inputs.expirationTime, 10) : 0,
+        };
+
+        try {
+            const noteId = await createNote(payload);
+            setNoteLink(`${Host}/note/${noteId}`);
+            setIsEncrypted(true);
+        } catch (error) {
+            raiseError(prettifyError(error));
+        }
     };
 
     const handleCheckboxChange = (option) => {
@@ -82,12 +100,13 @@ function Index() {
         setText('');
         setKey('');
         setEncryptedData('');
+        setNoteLink('');
     };
 
     if (isEncrypted) {
         return (
             <ResultComponent
-                noteLink={encryptedData}
+                noteLink={noteLink}
                 privateKey={key}
                 onBack={handleBack}
             />
@@ -105,6 +124,7 @@ function Index() {
                     placeholder="Enter your text here"
                     value={text}
                     onChange={e => setText(e.target.value)}
+                    rows={6}
                 />
                 <OptionsSection
                     options={options}
@@ -116,7 +136,7 @@ function Index() {
                     <FontAwesomeIcon icon={faLock} className="mr-2" />
                     Secure
                 </button>
-                <ErrorModal showError={error} message={errorMessage} onClose={() => setError(false)} />
+                <ErrorModal showError={error} message={errorMessages} onClose={() => setError(false)} />
             </header>
         </div>
     );

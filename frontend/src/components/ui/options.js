@@ -15,7 +15,7 @@ const OptionsSection = ({ options, inputs, handleCheckboxChange, handleInputChan
                 <InputField
                     type="number"
                     name="expirationTime"
-                    placeholder="Enter expiration time"
+                    placeholder="Enter expiration time in seconds"
                     value={inputs.expirationTime}
                     onChange={handleInputChange}
                     min="1"
