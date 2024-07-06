@@ -42,7 +42,7 @@ func RequestBodyTooLarge() APIError {
 }
 
 func InvalidContentType() APIError {
-	return NewAPIError(http.StatusBadRequest, fmt.Errorf("Content-Type header is not application/json"))
+	return NewAPIError(http.StatusUnsupportedMediaType, fmt.Errorf("Content-Type header is not application/json"))
 }
 
 func InvalidNoteId() APIError {
