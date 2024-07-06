@@ -21,6 +21,7 @@ func NewNoteHandler(db db.DB) *NoteHandler {
 }
 
 func (h NoteHandler) HandleNewNote(w http.ResponseWriter, r *http.Request) error {
+	// we could use middleware.AllowContentType, but i'd rather have a custom error
 	if !strings.Contains(r.Header.Get("Content-Type"), "application/json") {
 		return InvalidContentType()
 	}

@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
+	"github.com/go-chi/cors"
 	"github.com/joho/godotenv"
 	"log"
 	"log/slog"
@@ -23,6 +24,15 @@ func main() {
 
 	router := chi.NewMux()
 	router.Use(middleware.Recoverer)
+	router.Use(cors.Handler(cors.Options{
+		AllowedOrigins:   []string{"https://*", "http://*"},
+		AllowedMethods:   []string{"GET", "POST"},
+		AllowedHeaders:   []string{"Accept", "Authorization", "Content-Type"},
+		ExposedHeaders:   []string{"Link"},
+		AllowCredentials: false,
+		MaxAge:           300,
+	}))
+
 	listenAddr := fmt.Sprintf(":%s", os.Getenv("BACKEND_LISTENING_PORT"))
 
 	router.Post("/note/new", handler.Make(noteHandler.HandleNewNote))
