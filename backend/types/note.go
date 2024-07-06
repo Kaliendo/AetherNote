@@ -14,9 +14,13 @@ type Note struct {
 	CustomPassword bool   `json:"customPassword"`
 }
 
-type NoteResponse struct {
+type ExistingNoteResponse struct {
 	Data           string `json:"data"`
 	CustomPassword bool   `json:"customPassword"`
+}
+
+type CreateNoteResponse struct {
+	ID string `json:"id"`
 }
 
 func (n *Note) Validate() map[string]string {
@@ -52,9 +56,15 @@ func (n *Note) CreateHashMap() map[string]any {
 	}
 }
 
-func (n *Note) ToResponseNote() *NoteResponse {
-	return &NoteResponse{
+func (n *Note) ToExistingNoteResponse() *ExistingNoteResponse {
+	return &ExistingNoteResponse{
 		n.Data,
 		n.CustomPassword,
+	}
+}
+
+func (n *Note) ToCreateNoteResponse() *CreateNoteResponse {
+	return &CreateNoteResponse{
+		n.ID,
 	}
 }

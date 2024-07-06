@@ -31,8 +31,8 @@ func (h NoteHandler) HandleNewNote(w http.ResponseWriter, r *http.Request) error
 	dec := json.NewDecoder(r.Body)
 	dec.DisallowUnknownFields()
 
-	var n types.Note
-	err := dec.Decode(&n)
+	var note types.Note
+	err := dec.Decode(&note)
 	if err != nil {
 		var syntaxError *json.SyntaxError
 		var unmarshalTypeError *json.UnmarshalTypeError
@@ -68,23 +68,23 @@ func (h NoteHandler) HandleNewNote(w http.ResponseWriter, r *http.Request) error
 		}
 	}
 
-	errorMap := n.Validate()
+	errorMap := note.Validate()
 
 	if len(errorMap) > 0 {
 		return InvalidRequestData(errorMap)
 	}
 
-	n.ID, err = generateRandomString(32)
+	note.ID, err = generateRandomString(32)
 	if err != nil {
 		return err
 	}
 
-	err = h.db.SaveNote(n)
+	err = h.db.SaveNote(note)
 	if err != nil {
 		return err
 	}
 
-	return writeJSON(w, http.StatusCreated, n)
+	return writeJSON(w, http.StatusCreated, note.ToCreateNoteResponse())
 }
 
 func (h NoteHandler) HandleExistingNote(w http.ResponseWriter, r *http.Request) error {
@@ -99,5 +99,5 @@ func (h NoteHandler) HandleExistingNote(w http.ResponseWriter, r *http.Request) 
 		}
 		return err
 	}
-	return writeJSON(w, http.StatusCreated, note.ToResponseNote())
+	return writeJSON(w, http.StatusCreated, note.ToExistingNoteResponse())
 }
