@@ -1,6 +1,6 @@
 services:
   backend:
-    container_name: aethernote-be
+    container_name: aethernote-backend
     build:
       context: .
       dockerfile: Dockerfile.backend
