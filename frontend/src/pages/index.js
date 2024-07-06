@@ -5,6 +5,8 @@ import ErrorModal from '../components/ui/errorModal';
 import TextArea from '../components/ui/textArea';
 import OptionsSection from '../components/ui/options';
 import ResultComponent from '../components/result';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faLock } from '@fortawesome/free-solid-svg-icons';
 
 function Index() {
     const [text, setText] = useState('');
@@ -110,7 +112,10 @@ function Index() {
                     handleCheckboxChange={handleCheckboxChange}
                     handleInputChange={handleInputChange}
                 />
-                <button className="w-32 py-2 bg-purple-600 hover:bg-purple-700 rounded-lg" onClick={handleSecure}>Secure</button>
+                <button className="w-32 py-2 bg-purple-600 hover:bg-purple-700 rounded-lg flex items-center justify-center" onClick={handleSecure}>
+                    <FontAwesomeIcon icon={faLock} className="mr-2" />
+                    Secure
+                </button>
                 <ErrorModal showError={error} message={errorMessage} onClose={() => setError(false)} />
             </header>
         </div>
