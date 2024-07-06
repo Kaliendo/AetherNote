@@ -30,7 +30,7 @@ func (n *Note) Validate() map[string]string {
 	if n.Views > config.GetMaxViews() {
 		errorMap["views"] = "The views value can't exceed the limit"
 	}
-	if n.Expiration <= 0 {
+	if n.Expiration < 0 {
 		errorMap["expiration"] = "The expiration time must be at least 0"
 	}
 	maxExpirationtime := config.GetMaxExpirationTime()
