@@ -6,7 +6,7 @@ const OptionsSection = ({ options, inputs, handleCheckboxChange, handleInputChan
     return (
         <div className="flex flex-col items-start mb-6">
             <CheckboxWithLabel
-                label="Custom Expiration Time"
+                label="Custom expiration time"
                 checked={options.customExpiration}
                 onChange={() => handleCheckboxChange('customExpiration')}
                 color="bg-purple-600 border-purple-600"
@@ -23,7 +23,7 @@ const OptionsSection = ({ options, inputs, handleCheckboxChange, handleInputChan
             )}
 
             <CheckboxWithLabel
-                label="Custom Views Limit"
+                label="Custom views limit"
                 checked={options.customViewsLimit}
                 onChange={() => handleCheckboxChange('customViewsLimit')}
                 color="bg-purple-600 border-purple-600"
@@ -40,7 +40,7 @@ const OptionsSection = ({ options, inputs, handleCheckboxChange, handleInputChan
             )}
 
             <CheckboxWithLabel
-                label="Custom Password"
+                label="Custom password"
                 checked={options.customPassword}
                 onChange={() => handleCheckboxChange('customPassword')}
                 color="bg-purple-600 border-purple-600"
