@@ -1,6 +1,7 @@
 import "./App.css";
 import React from 'react';
-import Index from "./pages";
+import Note from "./pages/note";
+import Index from "./pages/index";
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
 function App() {
@@ -9,6 +10,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Index />} />
+        <Route path="/note/:noteId" element={<Note />} />
       </Routes>
     </BrowserRouter >
   );
