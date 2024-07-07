@@ -99,5 +99,5 @@ func (h NoteHandler) HandleExistingNote(w http.ResponseWriter, r *http.Request) 
 		}
 		return err
 	}
-	return writeJSON(w, http.StatusFound, note.ToExistingNoteResponse())
+	return writeJSON(w, http.StatusOK, note.ToExistingNoteResponse())
 }
