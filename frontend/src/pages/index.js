@@ -61,14 +61,13 @@ function Index() {
             return;
         }
 
-        console.log(data);
-        console.log(encKey);
         setEncryptedData(data);
 
         const payload = {
             data: data,
             views: options.customViewsLimit ? parseInt(inputs.viewsLimit, 10) : 1,
             expiration: options.customExpiration ? parseInt(inputs.expirationTime, 10) : 0,
+            customPassword: options.customPassword
         };
 
         try {
@@ -108,6 +107,7 @@ function Index() {
             <ResultComponent
                 noteLink={noteLink}
                 privateKey={key}
+                customPassword={options.customPassword}
                 onBack={handleBack}
             />
         );
@@ -125,6 +125,7 @@ function Index() {
                     value={text}
                     onChange={e => setText(e.target.value)}
                     rows={6}
+                    readOnly={false}
                 />
                 <OptionsSection
                     options={options}
