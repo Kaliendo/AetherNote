@@ -40,15 +40,15 @@ func (d DB) SaveNote(n types.Note) error {
 	}
 
 	configExpirationTime := config.GetMaxExpirationTime()
-	if configExpirationTime == 0 {
-		return nil
-	}
 
 	var ttl time.Duration
 	if n.Expiration > 0 {
 		ttl = time.Duration(n.Expiration) * time.Second
 	} else {
-		ttl = time.Duration(config.GetMaxExpirationTime()) * time.Second
+		if configExpirationTime == 0 {
+			return nil
+		}
+		ttl = time.Duration(configExpirationTime) * time.Second
 	}
 	if err = d.Expire(ctx, hashKey, ttl).Err(); err != nil {
 		return err
