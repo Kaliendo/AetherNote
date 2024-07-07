@@ -18,9 +18,28 @@ const createNote = async (payload) => {
         const result = await response.json();
         return result.id;
     } catch (error) {
-        console.error("API call failed: ", error);
         throw error;
     }
 };
 
-export { createNote };
+const retrieveNote = async (noteId) => {
+    try {
+        const response = await fetch(`${apiHost}/note/${noteId}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw errorData;
+        }
+
+        return await response.json();
+    } catch (error) {
+        throw error;
+    }
+};
+
+export { createNote, retrieveNote };
