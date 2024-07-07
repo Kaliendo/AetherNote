@@ -33,8 +33,8 @@ const aesDecrypt = (cipherTextWithIv, keyHex) => {
 }
 
 const deriveKeyFromPassword = (password) => {
-    const salt = CryptoJS.lib.WordArray.random(16)
-    const key = CryptoJS.PBKDF2(password, salt, {
+    const fixedSalt = CryptoJS.enc.Hex.parse('0123456789abcdef0123456789abcdef');
+    const key = CryptoJS.PBKDF2(password, fixedSalt, {
         keySize: 256 / 32,
         iterations: 100000,
     });
