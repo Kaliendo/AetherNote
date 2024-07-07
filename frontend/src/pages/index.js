@@ -120,6 +120,10 @@ function Index() {
                     <LogoSVG className="w-16 h-16 bg-white p-2 rounded-full" />
                     <h1 className="ml-4 text-2xl font-bold">AETHERNOTE</h1>
                 </div>
+                <p className="text-sm text-center mb-4 max-w-md">
+                    By default, notes expire after 1 view, do not have a time constraint, and a random key is generated.
+                    You can customize these options using the checkboxes below.
+                </p>
                 <TextArea
                     placeholder="Enter your text here"
                     value={text}
