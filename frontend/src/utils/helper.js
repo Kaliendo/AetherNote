@@ -3,5 +3,5 @@ export const prettifyError = (error) => {
         const messages = Object.entries(error.msg).map(([key, value]) => `${key}: ${value}`);
         return messages.length > 1 ? messages : messages[0];
     }
-    return ['An unknown error occurred.'];
+    return 'An unknown error occurred.';
 };
