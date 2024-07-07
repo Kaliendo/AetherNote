@@ -15,7 +15,6 @@ const Host = process.env.REACT_APP_HOST || 'http://localhost:3000';
 function Index() {
     const [text, setText] = useState('');
     const [key, setKey] = useState('');
-    const [encryptedData, setEncryptedData] = useState('');
     const [error, setError] = useState(false);
     const [errorMessages, setErrorMessages] = useState([]);
     const [options, setOptions] = useState({
@@ -61,8 +60,6 @@ function Index() {
             return;
         }
 
-        setEncryptedData(data);
-
         const payload = {
             data: data,
             views: options.customViewsLimit ? parseInt(inputs.viewsLimit, 10) : 1,
@@ -98,7 +95,6 @@ function Index() {
         setIsEncrypted(false);
         setText('');
         setKey('');
-        setEncryptedData('');
         setNoteLink('');
     };
 
