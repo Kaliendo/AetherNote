@@ -6,8 +6,6 @@ services:
       dockerfile: Dockerfile.backend
     depends_on:
       - redis
-    ports:
-      - "127.0.0.1:${BACKEND_LISTENING_PORT}:${BACKEND_LISTENING_PORT}"
     networks:
       - internal
 
@@ -16,8 +14,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.frontend
-    ports:
-      - "127.0.0.1:${FRONTEND_LISTENING_PORT}:3000"
     networks:
       - internal
 
@@ -26,6 +22,22 @@ services:
     image: "redis:alpine"
     networks:
       - internal
+
+  nginx:
+    container_name: reverse-proxy
+    build:
+      context: .
+      dockerfile: Dockerfile.nginx
+    ports:
+      - "${LISTENING_PORT}:80"
+    depends_on:
+      - backend
+      - frontend
+    networks:
+      - internal
+    environment:
+      BACKEND_PORT: "8080"
+      FRONTEND_PORT: "80"
 
 networks:
   internal:
