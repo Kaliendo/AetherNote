@@ -17,8 +17,7 @@ To configure AetherNote properly, set the following environment variables. Below
 
 | Variable                 | Description                                           | Possible Values                      |
 |--------------------------|-------------------------------------------------------|--------------------------------------|
-| `BACKEND_LISTENING_PORT` | Port number where the backend server listens          | Any valid port number (e.g., `8080`) |
-| `FRONTEND_LISTENING_PORT`| Port number where the frontend server listens         | Any valid port number (e.g., `4000`) |
+| `LISTENING_PORT`| Port number where the frontend server listens         | Any valid port number (e.g., `4000`) |
 | `REDIS_HOST`             | Hostname of the Redis server                          | Usually `localhost` or `redis` in Docker environments |
 | `REDIS_PREFIX`           | Prefix used for keys in Redis to identify stored notes| Any string (e.g., `note`)            |
 | `REDIS_PORT`             | Port number on which the Redis server is listening    | Any valid port number (default `6379`) |
@@ -45,4 +44,4 @@ To get AetherNote up and running:
    ```bash
     docker-compose up -d
    ```
-Your AetherNote service should now be running and accessible via http://localhost:4000
+Your AetherNote service should now be running and accessible via http://localhost:1337

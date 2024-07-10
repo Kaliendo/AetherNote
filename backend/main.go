@@ -3,7 +3,6 @@ package main
 import (
 	"AetherNote/db"
 	"AetherNote/handler"
-	"fmt"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/go-chi/cors"
@@ -11,7 +10,6 @@ import (
 	"log"
 	"log/slog"
 	"net/http"
-	"os"
 )
 
 func main() {
@@ -33,7 +31,7 @@ func main() {
 		MaxAge:           300,
 	}))
 
-	listenAddr := fmt.Sprintf(":%s", os.Getenv("BACKEND_LISTENING_PORT"))
+	listenAddr := ":8080"
 
 	router.Post("/note/new", handler.Make(noteHandler.HandleNewNote))
 	router.Get("/note/{id}", handler.Make(noteHandler.HandleExistingNote))

@@ -10,7 +10,7 @@ import ResultComponent from '../components/ui/result';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLock } from '@fortawesome/free-solid-svg-icons';
 
-const Host = process.env.REACT_APP_HOST || 'http://localhost:3000';
+const Host = `${window.location.protocol}//${window.location.hostname}${window.location.port ? ':' + window.location.port : ''}`;
 
 function Index() {
     const [text, setText] = useState('');

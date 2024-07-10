@@ -1,8 +1,6 @@
-const apiHost = process.env.REACT_APP_API_HOST || 'http://localhost:8080';
-
 const createNote = async (payload) => {
     try {
-        const response = await fetch(`${apiHost}/note/new`, {
+        const response = await fetch(`/api/note/new`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -24,7 +22,7 @@ const createNote = async (payload) => {
 
 const retrieveNote = async (noteId) => {
     try {
-        const response = await fetch(`${apiHost}/note/${noteId}`, {
+        const response = await fetch(`/api/note/${noteId}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
