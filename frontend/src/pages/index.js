@@ -51,6 +51,11 @@ function Index() {
             return;
         }
 
+        if (options.customPassword && (!inputs.customPassword)) {
+            raiseError("Password cannot be empty.");
+            return;
+        }
+
         const encKey = options.customPassword ? await deriveKeyFromPassword(inputs.customPassword) : await generateAESKey();
         setKey(encKey);
 
@@ -71,6 +76,16 @@ function Index() {
             const noteId = await createNote(payload);
             setNoteLink(`${Host}/note/${noteId}`);
             setIsEncrypted(true);
+            setOptions({
+                customExpiration: false,
+                customViewsLimit: false,
+                customPassword: false
+            });
+            setInputs({
+                expirationTime: '',
+                viewsLimit: '',
+                customPassword: ''
+            });
         } catch (error) {
             raiseError(prettifyError(error));
         }
@@ -96,6 +111,16 @@ function Index() {
         setText('');
         setKey('');
         setNoteLink('');
+        setOptions({
+            customExpiration: false,
+            customViewsLimit: false,
+            customPassword: false
+        });
+        setInputs({
+            expirationTime: '',
+            viewsLimit: '',
+            customPassword: ''
+        });
     };
 
     if (isEncrypted) {
