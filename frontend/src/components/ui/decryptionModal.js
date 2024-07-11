@@ -13,7 +13,7 @@ const DecryptionModal = ({ showModal, decryptionError, decryptionKey, setDecrypt
                     <h3 className="text-lg leading-6 font-bold text-white">Enter Decryption Key</h3>
                     <div className="mt-2 px-7 py-3">
                         {decryptionError && (
-                            <p className="text-sm text-red-500 mb-5">{decryptionError}</p>
+                            <p className="text-sm text-red-500 mb-5 break-all">{decryptionError}</p>
                         )}
                         <InputField
                             type="text"
