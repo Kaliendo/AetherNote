@@ -3,6 +3,7 @@
 
 AetherNote is a privacy-focused, encrypted note-sharing service built with React and Golang. Leveraging Redis for data handling and client-side encryption for security, AetherNote ensures that your notes remain confidential and secure until they are meant to be seen.
 
+Try it at: https://aethernot.es/
 ## Features
 
 - **Self-destructing notes**: By default notes are deleted automatically after being viewed once.
