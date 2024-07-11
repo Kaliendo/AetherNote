@@ -1,23 +1,21 @@
+import "./App.css";
 import React from 'react';
-import './App.css';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import IndexPage from './pages/index';
-import NotePage from './pages/note';
-import Footer from './components/ui/footer';
+import Note from "./pages/note";
+import Index from "./pages/index";
+import RootLayout from "./components/layout/root";
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
 function App() {
+
   return (
-    <Router>
-      <div className="relative min-h-screen">
-        <div className="pb-16">
-          <Routes>
-            <Route path="/" element={<IndexPage />} />
-            <Route path="/note" element={<NotePage />} />
-          </Routes>
-        </div>
-        <Footer />
-      </div>
-    </Router>
+    <BrowserRouter>
+      <Routes>
+        <Route element={<RootLayout />} >
+          <Route path="/" element={<Index />} />
+          <Route path="/note/:noteId" element={<Note />} />
+        </Route>
+      </Routes>
+    </BrowserRouter >
   );
 }
 
