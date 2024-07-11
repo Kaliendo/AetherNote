@@ -25,8 +25,6 @@ To configure AetherNote properly, set the following environment variables. Below
 | `MAX_EXPIRATION_TIME`    | Maximum time in seconds a note can exist              | Any integer or `0` for no time limit |
 | `MAX_VIEWS`              | Maximum number of views a note can have before deletion| Any integer                           |
 | `UPLOAD_LIMIT`           | Maximum size of the note content in bytes             | Any integer (e.g., `1048576` for 1MB) |
-| `REACT_APP_HOST`         | URL where the frontend is hosted                      | Any valid URL (e.g., `http://localhost:4000`) |
-| `REACT_APP_API_HOST`     | URL where the backend is hosted, used for API requests | Any valid URL (e.g., `http://localhost:8080`) |
 
 ## Docker Compose
 
